@@ -1,0 +1,115 @@
+/* ===========================================================================
+   Print: the whole site prints as a one-page, résumé-ish sheet.
+=========================================================================== */
+.print-sheet {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 13mm 14mm;
+  }
+  :root,
+  :root[data-theme="dark"] {
+    --paper: #fff;
+    --ink: #0f1f3a;
+    --text: #222;
+    --muted: #4f5560;
+    --accent: #2448e8;
+    --pen: #1d3fd0;
+    color-scheme: light;
+  }
+  html,
+  body {
+    background: #fff !important;
+    padding: 0 !important;
+  }
+  body::before,
+  #root > *:not(.print-sheet),
+  .skip,
+  noscript {
+    display: none !important;
+  }
+  .print-sheet {
+    display: block;
+    color: #222;
+    font: 9.6pt/1.42 var(--font-sans);
+  }
+  .ps-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12mm;
+    padding-bottom: 3mm;
+    border-bottom: 1.2pt solid #0f1f3a;
+  }
+  .ps-head h1 {
+    font: 400 26pt/1 var(--font-display);
+    letter-spacing: -0.03em;
+    color: #0f1f3a;
+  }
+  .ps-head p {
+    margin-top: 1.5mm;
+    font: italic 11pt var(--font-serif);
+    color: #2448e8;
+  }
+  .ps-links {
+    text-align: right;
+    font: 8.4pt var(--font-mono);
+    color: #4f5560;
+  }
+  .ps-tag {
+    margin: 3mm 0 1mm;
+    font-size: 10pt;
+  }
+  .print-sheet h2 {
+    margin: 4.5mm 0 1.5mm;
+    font: 500 7.6pt var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #2448e8;
+  }
+  .ps-proj {
+    margin-bottom: 2.6mm;
+    break-inside: avoid;
+  }
+  .ps-proj h3 {
+    font: 500 11pt var(--font-sans);
+    color: #0f1f3a;
+  }
+  .ps-proj h3 span {
+    font: 400 8.4pt var(--font-mono);
+    color: #4f5560;
+  }
+  .ps-stack,
+  .ps-url {
+    font: 8pt var(--font-mono);
+    color: #4f5560;
+  }
+  .ps-small {
+    display: grid;
+    gap: 1mm;
+    padding-top: 1mm;
+    border-top: 0.6pt solid #ccc;
+  }
+  .ps-small b {
+    color: #0f1f3a;
+  }
+  .ps-cols {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8mm;
+  }
+  .ps-timeline li {
+    display: grid;
+    grid-template-columns: 17mm 1fr;
+  }
+  .ps-foot {
+    margin-top: 5mm;
+    padding-top: 2mm;
+    border-top: 0.6pt solid #ccc;
+    font: 7.6pt var(--font-mono);
+    color: #4f5560;
+  }
+}

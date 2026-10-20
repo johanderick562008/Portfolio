@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!--head-->
+    <title>Johan Derick (JD) · first-year B.Tech student who builds software</title>
+    <meta name="description" content="Johan Derick, a first-year B.Tech student building practical software with Python, FastAPI and MySQL." />
+    <!--/head-->
+    <meta name="theme-color" content="#f3f0e8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
+    <meta name="author" content="Johan Derick" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!--preload-->
+    <script>
+      // Before first paint: pick the theme (saved choice, else the OS) and opt into motion.
+      (function () {
+        var d = document.documentElement;
+        d.classList.add("js");
+        var t = null;
+        try {
+          t = localStorage.getItem("jd-theme");
+        } catch (e) {}
+        if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        d.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript><p class="noscript">The games and charts need JavaScript; everything else on this page works without it.</p></noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

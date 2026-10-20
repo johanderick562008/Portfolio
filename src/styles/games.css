@@ -1,0 +1,628 @@
+/* ===========================================================================
+   Recess: four games on the back pages of the notebook
+=========================================================================== */
+.games {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(28px, 3.4vw, 48px) var(--s5);
+  align-items: start;
+}
+.game {
+  position: relative;
+  padding: var(--s5) clamp(18px, 2.4vw, 28px) var(--s4);
+  background: var(--surface);
+  border: 1.5px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--accent);
+  transform: rotate(var(--r, 0deg));
+  transition: transform 0.45s var(--ease-out);
+}
+.game:focus-within,
+.game:hover {
+  transform: rotate(0);
+}
+.game::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 28px;
+  width: 78px;
+  height: 22px;
+  transform: rotate(-4deg);
+  background: var(--tape);
+  border: 1px solid color-mix(in srgb, var(--rule) 60%, transparent);
+}
+.game-cricket {
+  grid-column: 1 / span 7;
+  --r: -0.5deg;
+}
+.game-ttt {
+  grid-column: 8 / -1;
+  --r: 0.8deg;
+  margin-top: var(--s7);
+}
+.game-flames {
+  grid-column: 1 / span 6;
+  --r: 0.6deg;
+}
+.game-rps {
+  grid-column: 7 / -1;
+  --r: -0.7deg;
+  margin-top: calc(-1 * var(--s6));
+}
+.game-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2px var(--s4);
+  margin-bottom: var(--s4);
+}
+.game-tag {
+  grid-column: 1 / -1;
+  color: var(--muted);
+}
+.game-title {
+  font: 400 var(--t-lg) / 1.05 var(--font-serif);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.game-note {
+  max-width: 15ch;
+  text-align: right;
+  font-size: 1rem;
+  transform: rotate(2.5deg);
+}
+.game-status {
+  min-height: 3em;
+  color: var(--ink);
+}
+.game-keys {
+  margin-top: var(--s2);
+  color: var(--faint);
+  text-align: right;
+}
+.game-src {
+  margin-top: var(--s4);
+  padding-top: var(--s3);
+  border-top: 1px dashed var(--rule);
+  font-size: var(--t-sm);
+  color: var(--muted);
+}
+.hands-empty {
+  color: var(--muted);
+  font-size: 1.15rem;
+}
+.pick {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 10px 4px 8px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  border-radius: var(--radius);
+  font: 500 0.75rem var(--font-mono);
+  color: var(--muted);
+  transition:
+    transform 0.15s var(--ease),
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.pick:hover {
+  border-color: var(--ink);
+  transform: translateY(-3px);
+  box-shadow: 0 3px 0 var(--accent);
+}
+.pick:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 0 0 var(--accent);
+  transition-duration: 0.06s;
+}
+
+/* -- hand cricket -- */
+.cricket {
+  display: grid;
+  gap: var(--s4);
+}
+.score {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.score > div {
+  display: grid;
+  padding: 10px 14px 12px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.score > div.is-batting {
+  border-color: var(--accent);
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+.score-who {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.score-num {
+  font: 500 2.5rem/1 var(--font-sans);
+  color: var(--ink);
+  margin: 4px 0;
+}
+.score-sub {
+  color: var(--faint);
+}
+.hands {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(16px, 4vw, 40px);
+  min-height: 116px;
+  border-block: 1px dashed var(--rule);
+  padding: var(--s3) 0;
+}
+.hand-show {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.hand-show .pips {
+  --s: 62px;
+}
+.hand-vs {
+  font: italic 400 1.4rem var(--font-serif);
+  color: var(--muted);
+}
+.hand-vs.is-out {
+  color: var(--danger);
+  font: 400 1.7rem var(--font-hand);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hand-show {
+    animation: throw 0.4s var(--ease-out) both;
+  }
+  .hand-show:last-child {
+    animation-delay: 0.08s;
+  }
+  .hand-vs.is-out {
+    animation: shake 0.5s 0.2s both;
+  }
+}
+@keyframes throw {
+  from {
+    transform: translateY(14px) scale(0.9);
+    opacity: 0;
+  }
+}
+@keyframes shake {
+  25% {
+    transform: rotate(-8deg) scale(1.15);
+  }
+  60% {
+    transform: rotate(6deg) scale(1.1);
+  }
+}
+.pips {
+  --s: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--s) * 0.06);
+  width: var(--s);
+  height: var(--s);
+  padding: calc(var(--s) * 0.13);
+  border: 1.5px solid var(--ink);
+  border-radius: calc(var(--s) * 0.18);
+  background: var(--surface);
+}
+.pips i {
+  border-radius: 50%;
+}
+.pips i.on {
+  background: var(--ink);
+}
+.picks {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+.balls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.balls li {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  font: 500 0.75rem var(--font-mono);
+  color: var(--ink);
+}
+.balls li.w {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+:root[data-theme="dark"] .balls li.w {
+  color: #0b1220;
+}
+
+/* -- tic tac toe -- */
+.ttt {
+  display: grid;
+  gap: var(--s4);
+}
+.ttt-wrap {
+  position: relative;
+  width: min(100%, 300px);
+  margin: var(--s2) auto 0;
+  aspect-ratio: 1;
+}
+.ttt-board {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  height: 100%;
+}
+.ttt-r {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.ttt-gc {
+  display: grid;
+}
+/* hand-ruled grid lines */
+.ttt-r + .ttt-r .ttt-gc {
+  border-top: 2px solid var(--ink);
+}
+.ttt-gc + .ttt-gc {
+  border-left: 2px solid var(--ink);
+}
+.ttt-cell {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  padding: 14%;
+  transition: background-color 0.2s;
+}
+.ttt-cell:not([aria-disabled]):hover {
+  background: var(--accent-soft);
+}
+.ttt-cell:focus-visible {
+  outline-offset: -4px;
+}
+.ttt-cell svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.ttt-x path,
+.ttt-o path {
+  fill: none;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+.ttt-x path {
+  stroke: var(--ink);
+}
+.ttt-o path {
+  stroke: var(--pen);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ttt-x path,
+  .ttt-o path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ink 0.3s var(--ease-out) forwards;
+  }
+  .ttt-x path + path {
+    animation-delay: 0.16s;
+  }
+  .ttt-o path {
+    animation-duration: 0.45s;
+  }
+}
+.ttt-cell.is-win {
+  background: var(--hl);
+}
+.ttt-line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.ttt-line line {
+  stroke: var(--danger);
+  stroke-width: 0.06;
+  stroke-linecap: round;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ttt-line line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: ink 0.5s 0.1s var(--ease-out) forwards;
+  }
+}
+.ttt .game-status {
+  min-height: 1.6em;
+  text-align: center;
+}
+.ttt-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s3);
+}
+.tally {
+  display: flex;
+  gap: var(--s4);
+  color: var(--muted);
+}
+.tally b {
+  color: var(--ink);
+  font-size: 0.875rem;
+}
+
+/* -- FLAMES -- */
+.flames {
+  display: grid;
+  gap: var(--s4);
+}
+.flames-form {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: var(--s3);
+}
+.flames-form label {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+}
+.flames-form input {
+  width: 100%;
+  padding: 8px 2px 6px;
+  border: 0;
+  border-bottom: 1.5px solid var(--ink);
+  background: transparent;
+  font: 400 1.25rem var(--font-hand);
+  color: var(--pen);
+}
+.flames-form input:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+  box-shadow: 0 2px 0 var(--accent);
+}
+.flames-amp {
+  font-size: 1.6rem;
+  padding-bottom: 4px;
+}
+.flames-form .btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.flames-work {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s4);
+  background: repeating-linear-gradient(transparent 0 31px, var(--line-blue) 31px 32px), var(--paper);
+  border: 1px solid var(--rule);
+}
+.flames-name {
+  display: flex;
+  flex-wrap: wrap;
+  font: 400 1.6rem/1.2 var(--font-hand);
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+.flames-name span {
+  position: relative;
+}
+.flames-name .is-struck {
+  color: var(--muted);
+}
+.flames-name .is-struck::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 52%;
+  height: 2px;
+  background: var(--danger);
+  transform: rotate(-12deg);
+}
+.flames-count {
+  font-size: 1.05rem;
+}
+.flames-word {
+  display: flex;
+  gap: var(--s3);
+  font: 400 2rem/1 var(--font-serif);
+  color: var(--ink);
+}
+.flames-word span {
+  position: relative;
+  width: 1.1em;
+  text-align: center;
+}
+.flames-word .is-out {
+  color: var(--muted);
+}
+.flames-word .is-out::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 50%;
+  height: 2.5px;
+  background: var(--danger);
+  transform: rotate(-20deg);
+}
+.flames-word .is-result {
+  color: var(--pen);
+}
+.flames-word .is-result::after {
+  content: "";
+  position: absolute;
+  inset: -0.18em -0.22em;
+  border: 2px solid var(--pen);
+  border-radius: 48% 52% 45% 55%;
+  transform: rotate(-6deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .flames-name .is-struck::after,
+  .flames-word .is-out::after {
+    transform-origin: left;
+    animation: strike 0.3s var(--ease-out) both;
+    animation-delay: var(--d);
+  }
+  .flames-word .is-result::after {
+    animation: fade 0.4s 2.2s both;
+  }
+}
+@keyframes strike {
+  from {
+    transform: rotate(-16deg) scaleX(0);
+  }
+}
+.flames-result strong {
+  font: 400 1.5rem var(--font-serif);
+  color: var(--pen);
+}
+.flames-joke {
+  color: var(--muted);
+  font-size: var(--t-sm);
+}
+
+/* -- rock paper scissor -- */
+.rps {
+  display: grid;
+  gap: var(--s4);
+}
+.rps-picks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s2);
+}
+.rps-pick {
+  font: 400 var(--t-sm) var(--font-sans);
+  color: var(--ink);
+  padding: var(--s3) var(--s2);
+}
+.rps-pick kbd {
+  margin-left: 4px;
+  padding: 0 4px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--muted);
+  font-size: 0.6875rem;
+}
+.rps-g {
+  width: 46px;
+  height: 42px;
+}
+.rps-g path {
+  fill: none;
+  stroke: var(--pen);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.rps-face {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--s3);
+  min-height: 132px;
+  padding: var(--s3) 0;
+  border-block: 1px dashed var(--rule);
+  text-align: center;
+}
+.rps-face .hands-empty {
+  grid-column: 1 / -1;
+}
+.rps-side {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  color: var(--ink);
+}
+.rps-side .mono {
+  color: var(--muted);
+}
+.rps-side .rps-g {
+  width: 64px;
+  height: 58px;
+}
+.rps-out {
+  font: 400 1.35rem var(--font-hand);
+  color: var(--muted);
+}
+.rps-you {
+  color: var(--ok);
+}
+.rps-system {
+  color: var(--danger);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rps-side {
+    animation: throw 0.35s var(--ease-out) both;
+  }
+  .rps-side:last-child {
+    animation-delay: 0.1s;
+  }
+  .rps-out {
+    animation: stamp 0.45s 0.2s both;
+  }
+}
+.rps-tally {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s2);
+}
+.rps-tally div {
+  display: grid;
+  gap: 2px;
+}
+.rps-tally dt {
+  color: var(--muted);
+  font-size: 0.6875rem;
+}
+.rps-tally dd {
+  color: var(--ink);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 960px) {
+  .game-cricket,
+  .game-ttt,
+  .game-flames,
+  .game-rps {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+}
+@media (max-width: 520px) {
+  .picks {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .game-note {
+    display: none;
+  }
+  .flames-form {
+    grid-template-columns: 1fr;
+  }
+  .flames-amp {
+    display: none;
+  }
+  .rps-tally {
+    grid-template-columns: 1fr 1fr;
+  }
+}

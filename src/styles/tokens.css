@@ -1,0 +1,199 @@
+/* ===========================================================================
+   Tokens. Warm paper, navy ink, one electric blue, a blue ballpoint.
+   Dark is its own design (a desk at night), not an inversion.
+   Text pairs were checked for WCAG AA (4.5:1) against paper and paper-2.
+=========================================================================== */
+
+/* Metric-matched fallbacks: text set in these occupies the same space as the
+   web font, so nothing moves when Fraunces / Plex / Kalam arrive.
+   Values measured in Chrome against the actual woff2 files. */
+@font-face {
+  font-family: "Fraunces Display Fallback";
+  src: local("Georgia");
+  size-adjust: 83.09%;
+  ascent-override: 117.71%;
+  descent-override: 30.69%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Fraunces Text Fallback";
+  src: local("Georgia");
+  size-adjust: 95%;
+  ascent-override: 102.9%;
+  descent-override: 26.8%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Plex Fallback";
+  src: local("Arial");
+  size-adjust: 101.13%;
+  ascent-override: 101.35%;
+  descent-override: 27.19%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Plex Mono Fallback";
+  src: local("Courier New");
+  size-adjust: 99.98%;
+  ascent-override: 102.52%;
+  descent-override: 27.5%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Kalam Fallback";
+  src: local("Comic Sans MS");
+  size-adjust: 91.1%;
+  ascent-override: 116.68%;
+  descent-override: 58.29%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* paper & ink */
+  --paper: #f3f0e8;
+  --paper-2: #ebe7dc;
+  --paper-3: #e2ddcf;
+  --surface: #faf8f3;
+  --ink: #0f1f3a;
+  --text: #24282f;
+  --muted: #4f5560;
+  --faint: #5f636c;
+  --rule: #d3cdbf;
+  --rule-strong: #0f1f3a;
+  --accent: #2448e8;
+  --accent-soft: rgba(36, 72, 232, 0.1);
+  --accent-ink: #ffffff;
+  --ok: #1f7a4d;
+  --warn: #8f5400;
+  --danger: #b3261e;
+
+  /* the notebook */
+  --pen: #1d3fd0;
+  --hl: rgba(36, 72, 232, 0.2);
+  --margin-red: rgba(204, 64, 64, 0.5);
+  --line-blue: rgba(36, 72, 232, 0.13);
+  --tape: rgba(226, 221, 207, 0.82);
+  --grid: rgba(15, 31, 58, 0.06);
+  --grain: 0.05;
+
+  /* the FreeBoard band: ink-navy in daylight */
+  --band: #0f1f3a;
+  --band-2: #172a4b;
+  --band-text: #ece7db;
+  --band-muted: #aab4c8;
+  --band-line: rgba(236, 231, 219, 0.07);
+  --band-pen: #a9b8ff;
+
+  /* charts: one hue, mixed into the surface (sequential, light → dark) */
+  --seq-on-strong: #ffffff;
+  --bar-muted: #b9b4a7;
+
+  --shadow-1: 0 1px 0 rgba(15, 31, 58, 0.06), 0 6px 16px -10px rgba(15, 31, 58, 0.25);
+  --shadow-2: 0 2px 0 rgba(15, 31, 58, 0.05), 0 22px 40px -22px rgba(15, 31, 58, 0.38);
+
+  /* type */
+  --font-display: "Fraunces Variable", "Fraunces Display Fallback", Georgia, serif;
+  --font-serif: "Fraunces Variable", "Fraunces Text Fallback", Georgia, serif;
+  --font-sans: "IBM Plex Sans", "Plex Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Plex Mono Fallback", ui-monospace, Consolas, monospace;
+  --font-hand: "Kalam", "Kalam Fallback", "Segoe Print", cursive;
+
+  /* a tighter scale: 12 · 14 · 17 · 20 · 24–30 · 32–48 · 44–84 · display */
+  --t-xs: 0.75rem;
+  --t-sm: 0.875rem;
+  --t-base: 1.0625rem;
+  --t-md: 1.25rem;
+  --t-lg: clamp(1.5rem, 1.25rem + 0.9vw, 1.875rem);
+  --t-xl: clamp(2rem, 1.45rem + 2vw, 3rem);
+  --t-2xl: clamp(2.75rem, 1.7rem + 4.1vw, 5.25rem);
+  --t-display: clamp(3.9rem, 0.6rem + 11vw, 11.75rem);
+  --t-hand: clamp(1.125rem, 1rem + 0.45vw, 1.4rem);
+
+  /* 4px rhythm */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+  --s10: 128px;
+  --section: clamp(88px, 10vw, 152px);
+
+  --gutter: clamp(18px, 4vw, 48px);
+  --max: 1280px;
+  --nav-h: 64px;
+  --strip-h: 0px;
+  --radius: 3px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #0b1220;
+  --paper-2: #111a2c;
+  --paper-3: #172238;
+  --surface: #0f182a;
+  --ink: #ece7db;
+  --text: #d5d1c7;
+  --muted: #a3abbb;
+  --faint: #8b94a7;
+  --rule: #233049;
+  --rule-strong: #ece7db;
+  --accent: #7a93ff;
+  --accent-soft: rgba(122, 147, 255, 0.14);
+  --accent-ink: #0b1220;
+  --ok: #5cc28f;
+  --warn: #e3a64a;
+  --danger: #ff8a80;
+
+  --pen: #9fb1ff;
+  --hl: rgba(122, 147, 255, 0.24);
+  --margin-red: rgba(255, 128, 128, 0.38);
+  --line-blue: rgba(122, 147, 255, 0.12);
+  --tape: rgba(236, 231, 219, 0.13);
+  --grid: rgba(236, 231, 219, 0.045);
+  --grain: 0.06;
+
+  /* at night the band lifts off the desk instead of sinking into it */
+  --band: #131e34;
+  --band-2: #1a2742;
+  --band-text: #ece7db;
+  --band-muted: #aab4c8;
+  --band-line: rgba(236, 231, 219, 0.06);
+  --band-pen: #a9b8ff;
+
+  --seq-on-strong: #0b1220;
+  --bar-muted: #3a4762;
+
+  --shadow-1: 0 1px 0 rgba(0, 0, 0, 0.35), 0 8px 18px -10px rgba(0, 0, 0, 0.7);
+  --shadow-2: 0 2px 0 rgba(0, 0, 0, 0.3), 0 26px 46px -22px rgba(0, 0, 0, 0.85);
+  color-scheme: dark;
+}
+
+/* No JS (so no data-theme yet): still follow the OS. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --paper: #0b1220;
+    --paper-2: #111a2c;
+    --paper-3: #172238;
+    --surface: #0f182a;
+    --ink: #ece7db;
+    --text: #d5d1c7;
+    --muted: #a3abbb;
+    --faint: #8b94a7;
+    --rule: #233049;
+    --rule-strong: #ece7db;
+    --accent: #7a93ff;
+    --accent-soft: rgba(122, 147, 255, 0.14);
+    --accent-ink: #0b1220;
+    --pen: #9fb1ff;
+    --hl: rgba(122, 147, 255, 0.24);
+    --band: #131e34;
+    color-scheme: dark;
+  }
+}

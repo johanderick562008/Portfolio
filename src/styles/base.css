@@ -1,0 +1,480 @@
+/* ===========================================================================
+   Base: reset, type, controls, utilities
+=========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+  scroll-padding-bottom: calc(var(--strip-h) + 20px);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--text);
+  font: 400 var(--t-base) / 1.6 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+pre,
+blockquote {
+  margin: 0;
+}
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"] {
+  cursor: default;
+}
+table {
+  border-collapse: collapse;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+strong,
+b {
+  font-weight: 500;
+  color: var(--ink);
+}
+em {
+  font-style: italic;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+[tabindex="-1"]:focus {
+  outline: none;
+}
+::selection {
+  background: var(--hl);
+  color: inherit;
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.02em;
+}
+.muted {
+  color: var(--muted);
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip {
+  position: fixed;
+  left: 16px;
+  top: -100px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 14px;
+}
+.skip:focus {
+  top: 12px;
+}
+.noscript {
+  padding: 16px var(--gutter);
+  color: var(--muted);
+  font-size: var(--t-sm);
+}
+main:focus {
+  outline: none;
+}
+
+/* Below-the-fold blocks skip layout and paint until they come near the
+   viewport. `auto` remembers each block's real size once it has rendered. */
+.teaser,
+.bench,
+.ix,
+.about-sec,
+.recess,
+#skills,
+.notes-sec,
+#journey,
+.contact-sec,
+.footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+/* Reveal: content is visible without JS; `html.js` opts into the motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 0.8s var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------- links --- */
+
+/* The pen-stroke underline: a quiet 1px rule at rest (links never rely on
+   colour alone), and a ballpoint stroke that draws itself on hover/focus. */
+.pen,
+.ext {
+  position: relative;
+  color: var(--ink);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+.pen::after,
+.ext::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: -0.32em;
+  height: 0.5em;
+  background: var(--pen);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8.5 C 40 4, 80 9.5, 120 6 S 180 3.5, 198 6.5' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat 0 0 / 100% 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'%3E%3Cpath d='M2 8.5 C 40 4, 80 9.5, 120 6 S 180 3.5, 198 6.5' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E")
+    no-repeat 0 0 / 100% 100%;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.45s var(--ease-out);
+  pointer-events: none;
+}
+.pen:hover,
+.ext:hover,
+.pen:focus-visible,
+.ext:focus-visible {
+  color: var(--pen);
+  background-size: 0 1px;
+}
+.pen:hover::after,
+.ext:hover::after,
+.pen:focus-visible::after,
+.ext:focus-visible::after {
+  clip-path: inset(0 0 0 0);
+}
+.ext {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.ext-arrow {
+  font-size: 0.85em;
+  transition: transform 0.25s var(--ease-out);
+}
+.ext:hover .ext-arrow {
+  transform: translate(2px, -2px);
+}
+.p-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s2) var(--s5);
+  margin-top: var(--s5);
+  font-weight: 500;
+}
+.p-link-live,
+.p-link-case {
+  color: var(--accent);
+}
+.p-links-tight {
+  margin-top: var(--s3);
+}
+.link-quiet {
+  font-weight: 500;
+}
+.link-quiet span[aria-hidden] {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-out);
+}
+.link-quiet:hover span[aria-hidden] {
+  transform: translateX(4px);
+}
+.link-btn {
+  border: 0;
+  padding: 0 0 2px;
+  margin: var(--s4) 0 var(--s5);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------- buttons --- */
+
+/* Printed buttons: they lift to a hard blue shadow, and press flat. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+  box-shadow: 0 0 0 var(--accent);
+  transition:
+    transform 0.18s var(--ease),
+    box-shadow 0.18s var(--ease),
+    background-color 0.2s,
+    color 0.2s;
+}
+.btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--accent);
+}
+.btn:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--accent);
+  transition-duration: 0.06s;
+}
+.btn:disabled {
+  opacity: 0.45;
+}
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+}
+.btn-sm {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: var(--t-sm);
+}
+
+/* chips & segmented controls: a row of small timetable cells */
+.chip,
+.seg button {
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 6px 11px;
+  border-radius: var(--radius);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.12s;
+}
+.chip:hover,
+.seg button:hover {
+  border-color: var(--ink);
+}
+.chip:active,
+.seg button:active {
+  transform: translateY(1px);
+}
+.chip[aria-pressed="true"],
+.seg button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.chip .mono {
+  color: var(--faint);
+  margin-left: 4px;
+}
+.chip[aria-pressed="true"] .mono {
+  color: inherit;
+  opacity: 0.75;
+}
+.filters,
+.seg {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.seg button {
+  font: 500 0.75rem var(--font-mono);
+  padding: 6px 10px;
+}
+
+/* -------------------------------------------------------------- labels --- */
+.kicker {
+  color: var(--muted);
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  margin-bottom: var(--s3);
+}
+.kicker-no {
+  font: italic 400 1.25rem var(--font-serif);
+  color: var(--accent);
+  letter-spacing: 0;
+}
+.sub-title {
+  font: 400 var(--t-xl) / 1.04 var(--font-display);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-variation-settings: "SOFT" 30;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 0.6875rem / 1 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid currentColor;
+}
+.status-live {
+  color: var(--ok);
+}
+.status-live .status-dot {
+  background: currentColor;
+  border-radius: 50%;
+}
+.status-local .status-dot {
+  border-radius: 50%;
+}
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-top: var(--s5);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--rule);
+}
+.stack li {
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.stack li::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+}
+.ticks {
+  display: grid;
+  gap: var(--s2);
+  margin: var(--s4) 0;
+}
+.ticks li {
+  position: relative;
+  padding-left: 26px;
+}
+.ticks li::before {
+  /* a pen tick */
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.45em;
+  width: 13px;
+  height: 8px;
+  border-left: 2px solid var(--pen);
+  border-bottom: 2px solid var(--pen);
+  transform: rotate(-48deg) skewX(-6deg);
+  border-radius: 0 0 0 2px;
+}
+.code {
+  padding: 14px 16px;
+  background: var(--paper-2);
+  border: 1px dashed var(--rule);
+  overflow-x: auto;
+  font: 400 0.78rem / 1.65 var(--font-mono);
+  color: var(--ink);
+  tab-size: 4;
+  white-space: pre;
+}
+.field-err {
+  color: var(--danger);
+  font-size: var(--t-sm);
+  margin-top: var(--s2);
+}
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
