@@ -16,7 +16,7 @@ export interface RouteMeta {
 
 export const META: Record<RouteKey, RouteMeta> = {
   home: {
-    title: "Johan Derick (JD) · first-year B.Tech student who builds software",
+    title: "Johan Derick -Portfolio",
     description:
       "Johan Derick, a first-year B.Tech student building practical software with Python, FastAPI and MySQL. Flagship project: FreeBoard, a live app for finding who's free between periods.",
     og: "/og/home.png",
