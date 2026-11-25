@@ -48,7 +48,7 @@ export const featured = {
     status: "Live",
     summary:
       "See who's free right now. Students save their timetable once, connect with classmates, and FreeBoard answers the question everyone asks between periods.",
-    stack: ["Python", "FastAPI", "SQLAlchemy", "MySQL (Aiven)", "Google OAuth 2.0", "JWT sessions", "SlowAPI", "HTML · CSS · JS", "Vercel"],
+    stack: ["Python", "FastAPI", "SQLAlchemy", "TiDB Cloud (MySQL)", "Google OAuth 2.0", "JWT sessions", "SlowAPI", "HTML · CSS · JS", "Vercel"],
     repo: gh("FreeBoard"),
     live: [
       { label: "Open the app", href: "https://freeboard-phi.vercel.app" },

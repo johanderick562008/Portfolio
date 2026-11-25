@@ -72,7 +72,7 @@ export function FreeBoardLaunch() {
                 <i />
                 <i />
                 <i />
-                <span className="mono">freeboard-phi.vercel.app/app.html</span>
+                <span className="mono">freeboard-phi.vercel.app/app</span>
               </div>
               <Shot s={SHOTS.live} sizes="(min-width: 1100px) 720px, 92vw" />
               <figcaption className="sr-only">{SHOTS.live.caption}</figcaption>

@@ -30,3 +30,4 @@ dist-ssr
 server/.env
 __pycache__/
 .venv/
+.claude/

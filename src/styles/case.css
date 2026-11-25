@@ -1245,3 +1245,51 @@ figcaption {
     max-width: 380px;
   }
 }
+
+/* FreeBoard: "shipped since these screenshots" */
+.since-h {
+  margin-top: var(--s7);
+  font: 500 var(--t-lg) / 1.3 var(--font-sans);
+  color: var(--ink);
+}
+.since-h .hand {
+  font-size: 1.1em;
+  margin-left: 6px;
+}
+.since {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--s6);
+  margin-top: var(--s4);
+  border-top: 1px solid var(--rule-strong);
+}
+.since li {
+  display: grid;
+  gap: 4px;
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.since strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.since span {
+  color: var(--muted);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .since {
+    grid-template-columns: 1fr;
+  }
+}
+.qp-groups {
+  margin: var(--s3) 0 0;
+}
+.g-narrow {
+  width: min(100%, 760px);
+  justify-self: center;
+}
+.gallery {
+  align-items: start;
+}

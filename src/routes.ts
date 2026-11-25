@@ -24,7 +24,7 @@ export const META: Record<RouteKey, RouteMeta> = {
   freeboard: {
     title: "FreeBoard case study · Johan Derick",
     description:
-      "How I built FreeBoard: the problem, the schema, Google sign-in with httpOnly JWT cookies, and why I removed OCR for a manual timetable builder.",
+      "How I built FreeBoard: the problem, the schema on TiDB Cloud, Google sign-in with httpOnly JWT cookies, private groups, and why I removed OCR for a manual timetable builder.",
     og: "/og/freeboard.png",
   },
   risk: {

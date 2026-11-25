@@ -40,7 +40,8 @@ export const skills: SkillGroup[] = [
     code: "DATA",
     title: "Databases",
     items: [
-      { name: "MySQL", depth: "used", where: "FreeBoard, MiniOLX" },
+      { name: "MySQL", depth: "used", where: "MiniOLX" },
+      { name: "TiDB Cloud (MySQL-compatible)", depth: "used", where: "FreeBoard" },
       { name: "SQLAlchemy ORM", depth: "used", where: "FreeBoard" },
       { name: "Relational schema design", depth: "used", where: "FreeBoard" },
     ],
@@ -184,9 +185,9 @@ export const journey: Milestone[] = [
 
 /** The "Now" index card. Update `updated` whenever the lines change. */
 export const now = {
-  updated: "Oct 2026",
+  updated: "Nov 2026",
   items: [
-    ["Building", "improvements to FreeBoard"],
+    ["Building", "FreeBoard: groups, themes, TiDB Cloud"],
     ["Learning", "DSA & ML fundamentals"],
     ["Studying", "first-year B.Tech"],
   ] as [string, string][],

@@ -249,7 +249,7 @@
 
 .launch-features {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: clamp(32px, 4vw, 56px);
   border-top: 1px solid rgba(236, 231, 219, 0.22);
 }
@@ -263,8 +263,15 @@
 .launch-features li + li {
   padding-left: var(--s4);
 }
+.launch-features li:nth-child(4n + 1) {
+  padding-left: 0;
+}
+.launch-features li:nth-child(4n),
 .launch-features li:last-child {
   border-right: 0;
+}
+.launch-features li:nth-child(n + 5) {
+  border-top: 1px solid rgba(236, 231, 219, 0.12);
 }
 .launch-features .mono {
   color: var(--band-pen);
@@ -297,15 +304,19 @@
     padding-left: var(--s4);
   }
   .launch-features {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .launch-features li:nth-child(3) {
-    border-right: 0;
+  .launch-features li:nth-child(n) {
+    padding-left: var(--s4);
+    border-right: 1px solid rgba(236, 231, 219, 0.12);
   }
-  .launch-features li:nth-child(4) {
+  .launch-features li:nth-child(odd) {
     padding-left: 0;
   }
-  .launch-features li:nth-child(n + 4) {
+  .launch-features li:nth-child(even) {
+    border-right: 0;
+  }
+  .launch-features li:nth-child(n + 3) {
     border-top: 1px solid rgba(236, 231, 219, 0.12);
   }
 }

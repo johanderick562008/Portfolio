@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { CaseHeader, CaseSection, LessonPlan, NextCase } from "../components/CaseParts";
 import { ExtLink, Shot, Stack, StatusTag } from "../components/Common";
 import { Hand, Mark } from "../components/Ink";
-import { ACTORS, AUTH, DECISIONS, HEALTH_URL, LESSONS, LIVE_URL, SCHEMA, SHOTS, TRADEOFFS, type Column } from "../data/freeboard";
+import { ACTORS, AUTH, DECISIONS, HEALTH_URL, LESSONS, LIVE_URL, SCHEMA, SHOTS, SINCE, TRADEOFFS, type Column } from "../data/freeboard";
 import { featured } from "../data/projects";
 
 const PLAN = [
@@ -174,11 +174,19 @@ const PEOPLE = [
   { name: "Tony", free: seed(11) },
   { name: "Kabir", free: seed(19) },
 ];
+/** Sample groups. In FreeBoard, groups filter the /schedule/live response in the browser. */
+const GROUPS: { name: string; members: string[] | null }[] = [
+  { name: "All", members: null },
+  { name: "Hostellers", members: ["You", "Aarav", "Kabir"] },
+  { name: "Cricket team", members: ["You", "Tony"] },
+];
 
 function QueryPreview() {
   const [view, setView] = useState<"live" | "together">("live");
   const [day, setDay] = useState(1);
   const [slot, setSlot] = useState(2);
+  const [group, setGroup] = useState(0);
+  const shown = GROUPS[group].members;
   const together = useMemo(() => DAYS.map((_, d) => Array.from({ length: SLOTS }, (_, s) => PEOPLE.filter((p) => p.free[d][s]).length)), []);
 
   return (
@@ -215,8 +223,15 @@ function QueryPreview() {
               GET /schedule/live?day={FULL_DAYS[day]}&amp;slot_index={slot}
             </code>
           </pre>
+          <div className="seg qp-groups" role="group" aria-label="Group (filtered in the browser)">
+            {GROUPS.map((g, i) => (
+              <button key={g.name} type="button" aria-pressed={group === i} onClick={() => setGroup(i)}>
+                {g.name}
+              </button>
+            ))}
+          </div>
           <ul className="qp-people" aria-live="polite" aria-label="Response">
-            {PEOPLE.map((p) => {
+            {PEOPLE.filter((p) => !shown || shown.includes(p.name)).map((p) => {
               const free = p.free[day][slot];
               return (
                 <li key={p.name} className={free ? "is-free" : ""}>
@@ -266,7 +281,7 @@ function QueryPreview() {
           </table>
         </div>
       )}
-      <p className="qp-foot mono">Illustration with sample data · same query shapes as the real API</p>
+      <p className="qp-foot mono">Illustration with sample data · same query shapes as the real API · groups filter the response in the browser</p>
     </div>
   );
 }
@@ -314,11 +329,14 @@ export default function FreeBoardCase() {
           <i />
           <i />
           <i />
-          <span className="mono">freeboard-phi.vercel.app/app.html</span>
+          <span className="mono">freeboard-phi.vercel.app/app</span>
         </div>
         <Shot s={SHOTS.live} sizes="(min-width: 1360px) 1280px, 94vw" eager />
         <figcaption>
-          {SHOTS.live.caption} <span className="muted">Screenshots are of the deployed app; the people in them are sample data.</span>
+          {SHOTS.live.caption}{" "}
+          <span className="muted">
+            Screenshots are of FreeBoard's current frontend (November 2026), run against sample people with the clock set to a Tuesday morning.
+          </span>
         </figcaption>
       </figure>
 
@@ -346,7 +364,32 @@ export default function FreeBoardCase() {
                 <Shot s={SHOTS.builder} sizes="(min-width: 1100px) 1060px, 94vw" />
                 <figcaption>{SHOTS.builder.caption}</figcaption>
               </figure>
+              {[SHOTS.groups, SHOTS.guide].map((s) => (
+                <figure key={s.src} className="g-shot">
+                  <Shot s={s} sizes="(min-width: 1100px) 520px, 94vw" />
+                  <figcaption>{s.caption}</figcaption>
+                </figure>
+              ))}
+              <figure className="g-shot g-wide">
+                <Shot s={SHOTS.doomsday} sizes="(min-width: 1100px) 1060px, 94vw" />
+                <figcaption>{SHOTS.doomsday.caption}</figcaption>
+              </figure>
+              <figure className="g-shot g-wide g-narrow">
+                <Shot s={SHOTS.appearance} sizes="(min-width: 1100px) 760px, 94vw" />
+                <figcaption>{SHOTS.appearance.caption}</figcaption>
+              </figure>
             </div>
+            <h3 className="since-h">
+              New in November 2026 <Hand>(all in the shots above)</Hand>
+            </h3>
+            <ul className="since">
+              {SINCE.map((x) => (
+                <li key={x.t} data-reveal>
+                  <strong>{x.t}</strong>
+                  <span>{x.d}</span>
+                </li>
+              ))}
+            </ul>
           </CaseSection>
 
           <CaseSection id="decisions" n={3} title="Decisions">
@@ -369,8 +412,8 @@ export default function FreeBoardCase() {
 
           <CaseSection id="schema" n={4} title="The schema" wide>
             <p className="cs-intro">
-              Three tables from <code className="mono">schema.sql</code>, plus the period settings the backend writes. Hover or focus a key
-              to see what it points to.
+              Three tables from <code className="mono">schema.sql</code>, plus the tables the backend writes for groups and period settings.
+              It all runs on TiDB Cloud, which speaks MySQL. Hover or focus a key to see what it points to.
             </p>
             <Schema />
             <Hand className="schema-note" as="p">
@@ -379,7 +422,10 @@ export default function FreeBoardCase() {
           </CaseSection>
 
           <CaseSection id="auth" n={5} title="The auth flow" wide>
-            <p className="cs-intro">Google sign-in with Authlib, then a JWT in an httpOnly cookie. Step through it:</p>
+            <p className="cs-intro">
+              Google sign-in with Authlib, then a JWT in an httpOnly cookie. New users aren't saved until they pick a username. Step through
+              it:
+            </p>
             <div className="auth-wrap">
               <AuthFlow />
               <figure className="auth-shot">
@@ -391,8 +437,8 @@ export default function FreeBoardCase() {
 
           <CaseSection id="try" n={6} title="Try the query">
             <p className="cs-intro">
-              Live and Together boil down to two endpoints. This is a sample-data illustration of what they return, using FreeBoard's default
-              bell times.
+              Live Now, Browse and Free Together boil down to two endpoints. This is a sample-data illustration of what they return, using
+              FreeBoard's default bell times.
             </p>
             <QueryPreview />
           </CaseSection>
